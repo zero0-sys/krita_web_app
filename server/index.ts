@@ -2,7 +2,9 @@ import express from "express";
 import { createServer } from "http";
 import path from "path";
 import { fileURLToPath } from "url";
+import multer from "multer";
 
+const upload = multer({ dest: "uploads/" });
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
@@ -15,6 +17,11 @@ async function startServer() {
   const staticPath = path.resolve(__dirname, "..", "dist", "public");
 
   app.use(express.static(staticPath));
+
+  app.post("/upload", upload.single("image"), (req, res) => {
+  res.json({ ok: true, filename: req.file?.filename });
+});
+
 
   // SPA fallback (kalau perlu)
   app.get("*", (_req, res) => {
