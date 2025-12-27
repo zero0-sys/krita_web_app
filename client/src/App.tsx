@@ -1,15 +1,15 @@
 import { Toaster } from "@/components/ui/sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import NotFound from "@/pages/NotFound";
-import { Route, Switch, Router as WouterRouter } from "wouter";
+import { Route, Switch, Router as WouterRouter, useLocation } from "wouter";
 import { useEffect } from "react";
 import ErrorBoundary from "./components/ErrorBoundary";
 import { ThemeProvider } from "./contexts/ThemeContext";
 import Home from "./pages/Home";
 
-/* ===== LOADING PAGE ===== */
+/* ===== LOADING INLINE (TANPA FILE BARU) ===== */
 function Loading() {
-  const [, setLocation] = require("wouter").useLocation();
+  const [, setLocation] = useLocation();
 
   useEffect(() => {
     const t = setTimeout(() => {
@@ -36,7 +36,6 @@ function Loading() {
   );
 }
 
-/* ===== ROUTER ===== */
 function AppRouter() {
   return (
     <Switch>
@@ -48,7 +47,6 @@ function AppRouter() {
   );
 }
 
-/* ===== APP ROOT ===== */
 function App() {
   return (
     <ErrorBoundary>
@@ -56,10 +54,11 @@ function App() {
         <TooltipProvider>
           <Toaster />
 
-          {/* 🔥 BASE GITHUB PAGES */}
+          {/* BASE GITHUB PAGES */}
           <WouterRouter base="/krita_web_app">
             <AppRouter />
           </WouterRouter>
+
         </TooltipProvider>
       </ThemeProvider>
     </ErrorBoundary>
